@@ -1,42 +1,6 @@
 $fontColor: whitesmoke;
 $colorHeading: #be4a14;
 
-a i{
-    color: whitesmoke;
-}
-
-#app  // div with id: content
-{
-    color: $fontColor;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-#app table
-{
-    color: $fontColor;
-    padding: 0;
-    margin: 0;
-    border-spacing: 0em;
-    text-align: left;
-}
-
-#content tr, #content th, #content td
-{
-    padding: 1.2em;
-}
-
-
-#content tr
-{
-    background-color: #d3d3d3;
-}
-
-#content tr:nth-child(odd)
-{
-    background-color: whitesmoke;
-}
-
-
 h2
 {
     color: $colorHeading;

@@ -12,54 +12,7 @@
 </head>
 
 <body>
-  <h1>DR RECORDS VUE</h1>
-  <div id="app">
-
-    <button class="btn btn-success" @click="addPressed = !addPressed">Add +</button>
-    <div v-show="addPressed">
-      <input class="form-control" type="text" v-model="addForm.title" placeholder="Title">
-      <input class="form-control" type="text" v-model="addForm.artist" placeholder="Artist">
-      <input class="form-control" type="number" v-model="addForm.releaseYear" placeholder="Year">
-      <a @click="addRecord">Add</button></a>
-    </div>
-
-    <div class="table-responsive-sm">
-    <table class="table table-dark table-striped" v-if="records.length">
-      <th>Title</th>
-      <th>Artist</th>
-      <th>Release Year</th>
-      <th>
-        Rediger
-      </th>
-      <th>Slet</th>
-
-      <tr v-for="record in records">
-        <td>
-          <input class="form-control" v-if="record.id == editId"  type="text" v-model="editForm.title = record.title" placeholder="title">
-          <span v-show="record.id != editId">{{record.title}}</span>
-        </td>
-        <td>
-          <input class="form-control" v-if="record.id == editId"  type="text" v-model="editForm.artist = record.artist" placeholder="artist">
-          <span v-show="record.id != editId">{{record.artist}}</span>
-        </td>
-        <td>
-          <input class="form-control" v-if="record.id == editId"  type="number" v-model="editForm.releaseYear = record.releaseYear" placeholder="releaseYear">
-          <span  v-show="record.id != editId">{{record.releaseYear}}</span>  
-        </td>
-        <td>
-          <a v-if="record.id == editId" @click="editSaveRecord(record.id)"><i class="far fa-check-circle"></i></a>
-          <a v-show="record.id != editId" @click="editId = record.id"><i class="fas fa-edit"></i></a>
-        </td>
-        <td>
-          <button v-if="record.id == editId" @click="editId = null">Annuller</button>
-          <a v-show="record.id != editId" @click="deleteRecord(record.id)"><i class="fas fa-trash"></i></a>
-        </td>
-      </tr>
-
-    </table>
-    </div>
-    <div class="alert-danger" v-for="error in errors">{{errors}}</div>
-  </div>
+  
     
   <script src="bundle.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
