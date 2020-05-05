@@ -5,7 +5,26 @@ h2
 {
     color: $colorHeading;
 }
-
 h1{
     @extend h2;
+    text-align: center;
 }
+.live-number{
+    font-size: 70px;
+}
+.col{
+    text-align: center;
+}
+.live-text{
+    font-size: 20px;
+}
+#header{
+    margin-top: 70px;
+    margin-bottom: 50px;
+}
+#store{
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
