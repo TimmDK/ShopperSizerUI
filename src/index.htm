@@ -13,28 +13,28 @@
 
 <body>
   <div id="app">
-    <div id="header">
-      <h1>Live View</h1>
-    </div>
-    <div id="store">
-      Storename
-    </div>
-    <div class="row" id="">
-      <div class="col-2"></div>
-      <div class="col border" >
-        <p class="live-number">{{LiveNumber}}</p>
-        <p class="live-text">Antal kunder</p>
+      <div id="header">
+        <h1>Live View</h1>
       </div>
-      <div class="col border" >
-        <p class="live-number">{{remaining}}</p>
-        <p class="live-text">Ledige pladser</p>
+      <div id="store">
+        Storename
       </div>
-      <div class="col-2"></div>
-    </div>
-    <button v-on:click="getLiveNumber">refresh</button>
+      <div class="row" id="">
+        <div class="col-2"></div>
+        <div class="col" >
+          <p class="live-number">{{LiveNumber}}</p>
+          <p class="live-text">Antal kunder</p>
+        </div>
+        <div class="col" >
+          <p class="live-number">{{remaining}}</p>
+          <p class="live-text">Ledige pladser</p>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <!-- <button v-on:click="getLiveNumber">refresh</button> -->
   </div>
 
-  
+
   <script src="bundle.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

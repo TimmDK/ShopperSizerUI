@@ -32,9 +32,16 @@ new Vue({
         getRemainingValue(){
             this.remaining = this.maxvalue - this.LiveNumber
         },
+          keepUpdating(){
+              setInterval(this.getLiveNumber,2000)
+          },
     },
     created(){
         this.getLiveNumber()
     },
+    mounted(){
+          this.keepUpdating()
+    },
+    
 })
 
