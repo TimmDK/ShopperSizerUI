@@ -17,19 +17,17 @@
         <h1>Live View</h1>
       </div>
       <div id="store">
-        Storename
+        <p>Storename</p>
       </div>
-      <div class="row" id="">
-        <div class="col-2"></div>
-        <div class="col" >
+      <div class="row" id="wrapper">
+        <div class="col-sm-6" >
           <p class="live-number">{{LiveNumber}}</p>
           <p class="live-text">Antal kunder</p>
         </div>
-        <div class="col" >
+        <div class="col-sm-6">
           <p class="live-number">{{remaining}}</p>
-          <p class="live-text">Ledige pladser</p>
+          <p class="live-text">Ledige</p>
         </div>
-        <div class="col-2"></div>
       </div>
       <!-- <button v-on:click="getLiveNumber">refresh</button> -->
   </div>

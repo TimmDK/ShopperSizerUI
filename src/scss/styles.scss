@@ -1,6 +1,9 @@
 $fontColor: whitesmoke;
 $colorHeading: #be4a14;
 
+body{
+}
+
 h2
 {
     color: $colorHeading;
@@ -10,21 +13,21 @@ h1{
     text-align: center;
 }
 .live-number{
-    font-size: 70px;
+    font-size: 14vw;
 }
-.col{
+.col-sm-6{
     text-align: center;
 }
 .live-text{
-    font-size: 20px;
+    font-size: 7vw;
 }
+
 #header{
-    margin-top: 70px;
-    margin-bottom: 50px;
+    padding: 2%;
 }
 #store{
     text-align: center;
-    font-size: 20px;
+    font-size: 3vw;
     margin-bottom: 40px;
 }
 
