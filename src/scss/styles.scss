@@ -22,12 +22,21 @@ h1{
     font-size: 7vw;
 }
 
+.chart-live{
+    font-size: 3vw;
+}
+
 #header{
     padding: 2%;
 }
-#store{
+.store{
     text-align: center;
     font-size: 3vw;
     margin-bottom: 40px;
+}
+
+/* Chart view */
+#chartDiv{
+    height: 200px;
 }
 

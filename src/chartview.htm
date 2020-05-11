@@ -15,7 +15,28 @@
 </head>
 
 <body>
-    <h2>Hej</h2>
+    <h1>Chart view</h1>
+    <div class="app">
+        <div class="store">
+            <p>Storename</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-6" >
+                        <p class="live-number chart-live">{{liveNumber}}</p>
+                        <p class="live-text chart-live">Antal kunder</p>
+                      </div>
+                      <div class="col-sm-6">
+                        <p class="live-number chart-live">{{remaining}}</p>
+                        <p class="live-text chart-live">Ledige</p>
+                      </div>
+                </div>
+            </div>
+            <div id="chartDiv" class="col-sm-6"></div>
+        </div>
+    </div>
+
     <script src="bundle.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
