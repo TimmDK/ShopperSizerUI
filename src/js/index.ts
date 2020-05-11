@@ -16,12 +16,15 @@ new Vue({
         liveNumber: 0,
         remaining:0,
         maxvalue: 200,
+        newvalue: 0,
+        valueColor: "green",
+        
     },
     methods:{
         getLiveNumber(){
             axios.get<ILiveNumber>(baseurl)
             .then((response: AxiosResponse<ILiveNumber>)=>{
-                this.LiveNumber = response.data.number
+                this.liveNumber = response.data.number
                 this.getRemainingValue()
                 console.log(response.data)
             })
@@ -30,11 +33,24 @@ new Vue({
             })
         },
         getRemainingValue(){
-            this.remaining = this.maxvalue - this.LiveNumber
+            this.remaining = this.maxvalue - this.liveNumber
         },
-          keepUpdating(){
+        changeColorMaxValue() {
+            if(this.liveNumber >= (this.maxvalue/100)*50 && this.liveNumber <= (this.maxvalue/100)*75) {
+              this.valueColor = "orange"
+            } else if (this.liveNumber >= (this.maxvalue/100)*75) {
+              this.valueColor = "red"
+            } else {
+              this.valueColor = "green"
+            }
+        },
+          keepUpdating(){ 
               setInterval(this.getLiveNumber,2000)
+              setInterval(this.changeColorMaxValue,100)
           },
+          changeMaxValue() {
+              this.maxvalue = this.newvalue
+          }
     },
     created(){
         this.getLiveNumber()
@@ -80,7 +96,7 @@ chart.data = [{
     "visits": 1114
   }, {
     "country": "India",
-    "visits": 984
+    "visits": 6969
   }, {
     "country": "Spain",
     "visits": 711

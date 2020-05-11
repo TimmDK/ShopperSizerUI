@@ -35,6 +35,15 @@
             </div>
             <div id="chartDiv" class="col-sm-6"></div>
         </div>
+        <h3>Ændre grænseværdi</h3>
+        <div class="row">
+                
+               
+                <input type="number"  v-model="newvalue" placeholder="Grænseværdi">
+                <button v-on:click="changeMaxValue">Gem</button>
+
+           
+        </div>
     </div>
 
     <script src="bundle.js"></script>

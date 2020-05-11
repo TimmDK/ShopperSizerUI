@@ -2,6 +2,10 @@ $fontColor: whitesmoke;
 $colorHeading: #be4a14;
 
 body{
+    overflow-x: hidden;
+    padding: 30px;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 h2
