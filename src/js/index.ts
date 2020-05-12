@@ -77,6 +77,16 @@ new Vue({
         console.log(error.message)
       })
     },
+    putLimitNumber() {
+     
+      axios.put<ILimitNumber>(limitUrl, {limitTal : this.newvalue})
+      .then((response: AxiosResponse<ILimitNumber>)=> {
+        console.log("rettet")
+      })
+      .catch((error: AxiosError) => {
+        console.log(error.message)
+      })
+    },
     changeColorMaxValue() {
       if (this.liveNumber >= (this.maxvalue / 100) * 50 && this.liveNumber <= (this.maxvalue / 100) * 75) {
         this.valueColor = "orange"
@@ -89,9 +99,6 @@ new Vue({
     keepUpdating() {
       setInterval(this.getLiveNumber, 2000)
       setInterval(this.changeColorMaxValue, 100)
-    },
-    changeMaxValue() {
-      this.maxvalue = this.newvalue
     },
     generateXaxisData() {
       for (let index = this.openingHour; index < this.closingHour+1; index++) {
