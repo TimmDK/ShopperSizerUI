@@ -1,148 +1,113 @@
 import axios, {
-    AxiosResponse,
-    AxiosError
+  AxiosResponse,
+  AxiosError
 } from "../../node_modules/axios/index";
 
-interface ILiveNumber{
-    id:number;
-    number:number;
+import VueApexCharts from '../../node_modules/vue-apexcharts/dist/vue-apexcharts';
+
+Vue.component('apexchart', VueApexCharts)
+
+interface ILiveNumber {
+  id: number;
+  number: number;
+}
+
+interface ILimitNumber {
+  id: number
+  limitTal: number
 }
 
 let baseurl = "https://shoppersizerrest.azurewebsites.net/api/LiveNumber/1"
+let limitUrl = "https://shoppersizerrest.azurewebsites.net/api/LimitNumber/1"
 
 new Vue({
-    el: ".app",
-    data:{
-        liveNumber: 0,
-        remaining:0,
-        maxvalue: 200,
-        newvalue: 0,
-        valueColor: "green",
+  el: ".app",
+  components: {
+    apexcharts: VueApexCharts,
+  },
+
+  data: {
+    liveNumber: 0,
+    remaining: 0,
+    maxvalue: 100,
+    newvalue: 0,
+    valueColor: "green",
+    openingHour: 8,
+    closingHour: 20,
+
+    options: {
+      chart: {
+        id: 'vuechart-example',
+      },
+      xaxis: {
+        categories: []
+      }
+    },
+    series: [{
+      name: 'Antal kunder',
+      data: [50, 26, 19, 91, 85, 10, 84, 18, 49, 92, 13, 99, 10]
+    }],
+
+
+
+  },
+  methods: {
+    getLiveNumber() {
+      axios.get<ILiveNumber>(baseurl)
+        .then((response: AxiosResponse<ILiveNumber>) => {
+          this.liveNumber = response.data.number
+          this.getRemainingValue()
+          console.log(response.data)
+        })
+        .catch((error: AxiosError) => {
+          this.errorMessage = error.message
+        })
+    },
+    getRemainingValue() {
+      this.remaining = this.maxvalue - this.liveNumber
+    },
+    getLimitNumber() {
+      axios.get<ILimitNumber>(limitUrl)
+      .then((response: AxiosResponse<ILimitNumber>) =>{
+        this.maxvalue = response.data.limitTal
         
+      })
+      .catch((error: AxiosError) => {
+        this.errorMessage = error.message
+        console.log(error.message)
+      })
     },
-    methods:{
-        getLiveNumber(){
-            axios.get<ILiveNumber>(baseurl)
-            .then((response: AxiosResponse<ILiveNumber>)=>{
-                this.liveNumber = response.data.number
-                this.getRemainingValue()
-                console.log(response.data)
-            })
-            .catch((error: AxiosError)=>{
-                this.errorMessage = error.message
-            })
-        },
-        getRemainingValue(){
-            this.remaining = this.maxvalue - this.liveNumber
-        },
-        changeColorMaxValue() {
-            if(this.liveNumber >= (this.maxvalue/100)*50 && this.liveNumber <= (this.maxvalue/100)*75) {
-              this.valueColor = "orange"
-            } else if (this.liveNumber >= (this.maxvalue/100)*75) {
-              this.valueColor = "red"
-            } else {
-              this.valueColor = "green"
-            }
-        },
-          keepUpdating(){ 
-              setInterval(this.getLiveNumber,2000)
-              setInterval(this.changeColorMaxValue,100)
-          },
-          changeMaxValue() {
-              this.maxvalue = this.newvalue
-          }
+    changeColorMaxValue() {
+      if (this.liveNumber >= (this.maxvalue / 100) * 50 && this.liveNumber <= (this.maxvalue / 100) * 75) {
+        this.valueColor = "orange"
+      } else if (this.liveNumber >= (this.maxvalue / 100) * 75) {
+        this.valueColor = "red"
+      } else {
+        this.valueColor = "green"
+      }
     },
-    created(){
-        this.getLiveNumber()
+    keepUpdating() {
+      setInterval(this.getLiveNumber, 2000)
+      setInterval(this.changeColorMaxValue, 100)
     },
-    mounted(){
-          this.keepUpdating()
+    changeMaxValue() {
+      this.maxvalue = this.newvalue
     },
-    
+    generateXaxisData() {
+      for (let index = this.openingHour; index < this.closingHour+1; index++) {
+        this.options.xaxis.categories.push(index)
+      }
+    }
+  },
+  created() {
+    this.getLiveNumber()
+    this.getLimitNumber()
+    this.generateXaxisData()
+  },
+  mounted() {
+    this.keepUpdating()
+  },
+
 })
 
 /* CHART VIEW PAGE */
-
-/* Imports */
-import * as am4core from "../../node_modules/@amcharts/amcharts4/core"
-import * as am4charts from "../../node_modules/@amcharts/amcharts4/charts"
-import am4themes_animated from "../../node_modules/@amcharts/amcharts4/themes/animated"
-import { any } from "../../node_modules/@amcharts/amcharts4/.internal/core/utils/Array";
-
-// Theme
-am4core.useTheme(am4themes_animated)
-
-// Creates chart
-let chart = am4core.create("chartDiv", am4charts.XYChart)
-
-// Add data
-chart.data = [{
-    "country": "USA",
-    "visits": 2025
-  }, {
-    "country": "China",
-    "visits": 1882
-  }, {
-    "country": "Japan",
-    "visits": 1809
-  }, {
-    "country": "Germany",
-    "visits": 1322
-  }, {
-    "country": "UK",
-    "visits": 1122
-  }, {
-    "country": "France",
-    "visits": 1114
-  }, {
-    "country": "India",
-    "visits": 6969
-  }, {
-    "country": "Spain",
-    "visits": 711
-  }, {
-    "country": "Netherlands",
-    "visits": 665
-  }, {
-    "country": "Russia",
-    "visits": 580
-  }, {
-    "country": "South Korea",
-    "visits": 443
-  }, {
-    "country": "Canada",
-    "visits": 441
-  }, {
-    "country": "Brazil",
-    "visits": 395
-  }]
-
-  // Create axes
-
-let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-categoryAxis.dataFields.category = "country";
-categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.renderer.minGridDistance = 30;
-
-categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
-  if (target.dataItem && target.dataItem.index & 2 == 2) {
-    return dy + 25;
-  }
-  return dy;
-});
-
-let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-// Create series
-let series = chart.series.push(new am4charts.ColumnSeries());
-series.dataFields.valueY = "visits";
-series.dataFields.categoryX = "country";
-series.name = "Visits";
-series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-series.columns.template.fillOpacity = .8;
-
-let columnTemplate = series.columns.template;
-columnTemplate.strokeWidth = 2;
-columnTemplate.strokeOpacity = 1;
-
-
