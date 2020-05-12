@@ -30,7 +30,7 @@ new Vue({
     liveNumber: 0,
     remaining: 0,
     maxvalue: 100,
-    newvalue: 0,
+    newvalue: 3000,
     valueColor: "green",
     openingHour: 8,
     closingHour: 20,
@@ -78,10 +78,11 @@ new Vue({
       })
     },
     putLimitNumber() {
-     
-      axios.put<ILimitNumber>(limitUrl, {limitTal : this.newvalue})
+      let ln : HTMLInputElement = <HTMLInputElement> document.getElementById("test") 
+      axios.put<ILimitNumber>(limitUrl, {id: 1, limitTal : Number(ln.value)})
       .then((response: AxiosResponse<ILimitNumber>)=> {
         console.log("rettet")
+        this.getLimitNumber()
       })
       .catch((error: AxiosError) => {
         console.log(error.message)
