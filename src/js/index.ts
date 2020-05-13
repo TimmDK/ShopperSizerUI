@@ -95,7 +95,7 @@ new Vue({
         })
     },
     putLimitNumber() {
-      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("test")
+      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("valueInput")
       axios.put<ILimitNumber>(limitUrl, { id: 1, limitTal: Number(ln.value) })
         .then((response: AxiosResponse<ILimitNumber>) => {
           console.log("rettet")
