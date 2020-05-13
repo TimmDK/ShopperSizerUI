@@ -25,7 +25,7 @@ interface IDataSets {
 
 let baseurl = "https://shoppersizerrest.azurewebsites.net/api/LiveNumber/1"
 let limitUrl = "https://shoppersizerrest.azurewebsites.net/api/LimitNumber/1"
-let dataSetUrl = "https://shoppersizerrest.azurewebsites.net/api/datasets"
+let dataSetUrl = "https://shoppersizerrest.azurewebsites.net/api/datasets/date"
 
 new Vue({
   el: ".app",
@@ -124,8 +124,8 @@ new Vue({
       }
     },
     generateYaxisData() {
-
-      axios.get<IDataSets[]>(dataSetUrl)
+      console.log(Date)
+      axios.get<IDataSets[]>(dataSetUrl + "/" + Date.toString)
         .then((response: AxiosResponse<IDataSets[]>) => {
           
           let newData: number[] = []
