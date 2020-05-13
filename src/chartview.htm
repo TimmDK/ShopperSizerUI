@@ -24,11 +24,11 @@
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-6">
-                        <p class="live-number chart-live">{{liveNumber}}</p>
+                        <p id="liveNumber" class="live-number chart-live">{{liveNumber}}</p>
                         <p class="live-text chart-live">Antal kunder</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="live-number chart-live">{{remaining}}</p>
+                        <p id="remaining" class="live-number chart-live">{{remaining}}</p>
                         <p class="live-text chart-live">Ledige</p>
                     </div>
                 </div>
@@ -41,12 +41,8 @@
         </div>
         <h3>Ændre grænseværdi</h3>
         <div class="row">
-
-
-            <input type="number" id="test" v-model="newvalue" placeholder="Grænseværdi">
-            <button v-on:click="putLimitNumber">Gem</button>
-
-
+            <input type="number" id="valueInput" v-model="newvalue" placeholder="Grænseværdi">
+            <button id="saveButton" v-on:click="putLimitNumber">Gem</button>
         </div>
     </div>
 

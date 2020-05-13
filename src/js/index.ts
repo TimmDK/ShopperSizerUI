@@ -44,7 +44,7 @@ new Vue({
 
     options: {
       chart: {
-        id: 'vuechart-example',
+        id: 'vuechart',
       },
       xaxis: {
         categories: []
@@ -52,7 +52,7 @@ new Vue({
     },
     series: [{
       name: 'Antal kunder',
-      data: [1,2,3,4,5,6,6,7,8,5,34,32]
+      data: [1]
     }],
 
 
@@ -75,35 +75,35 @@ new Vue({
     },
     getLimitNumber() {
       axios.get<ILimitNumber>(limitUrl)
-      .then((response: AxiosResponse<ILimitNumber>) =>{
-        this.maxvalue = response.data.limitTal
-        
-      })
-      .catch((error: AxiosError) => {
-        this.errorMessage = error.message
-        console.log(error.message)
-      })
+        .then((response: AxiosResponse<ILimitNumber>) => {
+          this.maxvalue = response.data.limitTal
+
+        })
+        .catch((error: AxiosError) => {
+          this.errorMessage = error.message
+          console.log(error.message)
+        })
     },
     getDataSets() {
       axios.get<IDataSets[]>(dataSetUrl)
-      .then((response: AxiosResponse<IDataSets[]>) => {
-        console.log(response.data)
-        console.log(response.data.length)
-      })
-      .catch((error: AxiosError) => {
-        console.log(error.message)
-      })  
+        .then((response: AxiosResponse<IDataSets[]>) => {
+          console.log(response.data)
+          console.log(response.data.length)
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
     },
     putLimitNumber() {
-      let ln : HTMLInputElement = <HTMLInputElement> document.getElementById("test") 
-      axios.put<ILimitNumber>(limitUrl, {id: 1, limitTal : Number(ln.value)})
-      .then((response: AxiosResponse<ILimitNumber>)=> {
-        console.log("rettet")
-        this.getLimitNumber()
-      })
-      .catch((error: AxiosError) => {
-        console.log(error.message)
-      })
+      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("test")
+      axios.put<ILimitNumber>(limitUrl, { id: 1, limitTal: Number(ln.value) })
+        .then((response: AxiosResponse<ILimitNumber>) => {
+          console.log("rettet")
+          this.getLimitNumber()
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
     },
     changeColorMaxValue() {
       if (this.liveNumber >= (this.maxvalue / 100) * 50 && this.liveNumber <= (this.maxvalue / 100) * 75) {
@@ -119,39 +119,40 @@ new Vue({
       setInterval(this.changeColorMaxValue, 100)
     },
     generateXaxisData() {
-      for (let index = this.openingHour; index < this.closingHour+1; index++) {
+      for (let index = this.openingHour; index < this.closingHour + 1; index++) {
         this.options.xaxis.categories.push(index)
       }
     },
     generateYaxisData() {
-//       const dataset: IDataSets[] = this.getDataSets()
-//       console.log(dataset)
 
-//       const array = ["one", "two", "three"]
-// dataset.forEach(function (item, index) {
-//   console.log(item, index);
-// });
+      axios.get<IDataSets[]>(dataSetUrl)
+        .then((response: AxiosResponse<IDataSets[]>) => {
+          
+          let newData: number[] = []
+          
+          for (let i = 0; i < response.data.length; i++) {
+            newData[i] = response.data[i].count
+          }
+          console.log(newData)
+
+          this.series = [{
+            data: newData
+          }]
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+
       
-axios.get<IDataSets[]>(dataSetUrl)
-.then((response: AxiosResponse<IDataSets[]>) => {
-  console.log(this.series.data)
-  let array : number[]
-  response.data.forEach(element => {
-    this.series.data += element.count
-  });
-  console.log(this.series.data)
-})
-.catch((error: AxiosError) => {
-  console.log(error.message)
-})  
 
-    }
+    },
   },
   created() {
     this.getLiveNumber()
     this.getLimitNumber()
     this.generateXaxisData()
     this.generateYaxisData()
+    //this.updateChart()
   },
   mounted() {
     this.keepUpdating()
