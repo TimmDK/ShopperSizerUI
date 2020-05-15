@@ -1,62 +1,88 @@
 <!doctype html>
 <html lang="en-US">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>live view - Shopper sizer</title>
   <link rel="stylesheet" type="text/css" href="bundle.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <style> .popup {position: relative; display: inline-block; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; } .popup .popuptext {visibility: hidden; width: 160åx; background-color: #555; color: #fff; text-align: center; border-radius: 6px; padding: 8px 0; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -80px;} .popup .popuptext::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #555 transparent transparent transparent;} .popup .show { visibility: visible; -webkit-animation: fadeIn 1s; animation: fadeIn 1s;} @-webkit-keyframes fadeIn {from {opacity: 0;} to {opacity: 1;}} @keyframes fadeIn { from{opacity: 0;}to{opacity: 1;} }  </style>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
 </head>
 
 <body>
   <div class="app">
     <a href="chartview.htm">lool</a>
-    <div>
-      <div class="column" style="position: absolute; top: 10px; right: -90px;">
-        <div class="col-sm-6" style="background-color: goldenrod; width: 100px;">Team</div>
-        <div class="col-sm-6" style="background-color:  rgb(88, 84, 76); width: 200px ;">Alpha</div>
-        <div class="col-sm-6" style="background-color: rgb(88, 84, 76); width: 100px;">
-          <button class="popup" onclick="myPopup()">Login
-            <span class="popuptext" id="Popup">Popup Message</span>
-          </button>
-          <script>
-            function myPopup() {
-              var popup = document.getElementById("Popup");
-              popup.classList.toggle("show");
-            }
-          </script>
-        </div>
-      </div>
-      <!-- <button style="position: absolute; top: 10px; right: 10px;">Login</button> -->
-      
+    
+
+
+    <button class="login-popup" onclick="loginPopup()">Login</button>
+
+    <div class="form-popup" id="myForm">
+      <form class="form-container">
+        <h1>Login</h1>
+        
+        <input type="text" placeholder="Username" v-model="username">
+
+        <input type="password" placeholder="Password" v-model="password">
+
+        <button type="submit" class="login-button" v-on:click="login">Login</button>
+      </form>
+
+      <script>
+        function loginPopup() {
+          
+          let display = document.getElementById("myForm")
+          
+          if(display.style.display == "none") {
+            display.style.display = "block"
+          } else {
+            display.style.display = "none"
+          }
+
+        }
+
+
+
+      </script>
+
     </div>
-      <div id="header">
-        <h1>Live View</h1>
+
+    <div id="header">
+      <h1>Live View</h1>
+    </div>
+    <div class="store">
+      <p>Storename</p>
+    </div>
+    <div class="row" id="wrapper">
+      <div class="col-sm-6">
+        <p class="live-number">{{liveNumber}}</p>
+        <p class="live-text">Antal kunder</p>
       </div>
-      <div class="store">
-        <p>Storename</p>
+      <div class="col-sm-6">
+        <p class="live-number" v-bind:style="{color: valueColor}">{{remaining}}</p>
+        <p class="live-text">Ledige</p>
       </div>
-      <div class="row" id="wrapper">
-        <div class="col-sm-6" >
-          <p class="live-number">{{liveNumber}}</p>
-          <p class="live-text">Antal kunder</p>
-        </div>
-        <div class="col-sm-6">
-          <p class="live-number" v-bind:style="{color: valueColor}">{{remaining}}</p>
-          <p class="live-text">Ledige</p>
-        </div>
-      </div>
-      
-      <!-- <button v-on:click="getLiveNumber">refresh</button> -->
+    </div>
+
+    <!-- <button v-on:click="getLiveNumber">refresh</button> -->
   </div>
 
 
   <script src="bundle.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

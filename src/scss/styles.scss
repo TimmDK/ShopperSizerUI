@@ -43,3 +43,26 @@ h1{
 #chartDiv{
 }
 
+.form-popup {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+
+.form-container {
+    max-width: 200px;
+    min-width: 100px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.form-container input {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.login-button {
+    margin-left: 60px; 
+}
+
