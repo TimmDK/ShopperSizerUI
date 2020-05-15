@@ -41,8 +41,32 @@
         </div>
         <h3>Ændre grænseværdi</h3>
         <div class="row">
-            <input type="number" id="valueInput" placeholder="Grænseværdi">
+            <input type="number" id="valueInput" placeholder="Ny Grænseværdi">
             <button id="saveButton" v-on:click="putLimitNumber">Gem</button>
+        </div>
+        <h3>Ændre åbningstid</h3>
+        <div class="row">
+            <input type="number" id="valueInput2" placeholder="Ny Åbningstid">
+            <button id="saveOpenHourButton" v-on:click="saveOpenHour">Gem</button>
+        </div>
+        <h3>Ændre lukketid</h3>
+        <div class="row">
+            <input type="number" id="valueInput3" placeholder="Ny lukketid">
+            <button id="saveCloseHourButton" v-on:click="saveCloseHour">Gem</button>
+        </div>
+        <h3>Ændre username</h3>
+        <div class="row">
+            <input type="text" id="valueInput4" placeholder="New Username">
+            <button id="saveUsernameButton" v-on:click="saveUsernameHour">Gem</button>
+        </div>
+        <h3>Ændre password</h3>
+        <div class="row">
+            <input type="text" id="valueInput5" placeholder="New Password">
+            <button id="savePasswordButton" v-on:click="savePasswordHour">Gem</button>
+        </div>
+        <h3>Private / Public</h3>
+        <div class="row">
+            <input type="checkbox" id="valueInput6">
         </div>
     </div>
 
