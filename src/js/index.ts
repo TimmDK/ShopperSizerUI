@@ -49,6 +49,15 @@ new Vue({
           enabled: false
         }
       },
+      plotOptions: {
+        bar: {
+            //distributed: true
+        }
+      },
+      // fill: {
+      //   colors: ['#41B883', '#41B883'],
+      // },
+      
       xaxis: {
         categories: [],
         //tickPlacement: 'on'
@@ -112,15 +121,17 @@ new Vue({
     changeColorMaxValue() {
       if (this.liveNumber >= (this.maxvalue / 100) * 50 && this.liveNumber <= (this.maxvalue / 100) * 75) {
         this.valueColor = "orange"
+        console.log(this.colors)
       } else if (this.liveNumber >= (this.maxvalue / 100) * 75) {
         this.valueColor = "red"
+        console.log(this.colors)
       } else {
         this.valueColor = "green"
       }
     },
     keepUpdating() {
       setInterval(this.getLiveNumber, 2000)
-      //setInterval(this.generateYaxisData, 2000)
+      setInterval(this.generateYaxisData, 2000)
       setInterval(this.changeColorMaxValue, 100)
     },
     generateXaxisData() {
@@ -154,7 +165,7 @@ new Vue({
               var hour = Number(splitted[11]+splitted[12])
 
               if(hour == index)
-              countArray[hour+1] = (element.count)
+              countArray[hour] = (element.count)
             });          
           }
 
@@ -164,7 +175,7 @@ new Vue({
               countArray[index] = 0
             }  
           }
-          //console.log(countArray)
+          console.log(countArray)
 
           var result = countArray.slice(this.openingHour, this.closingHour+1)
           //console.log(result)
