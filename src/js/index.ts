@@ -45,9 +45,13 @@ new Vue({
     options: {
       chart: {
         id: 'vuechart',
+        zoom: {
+          enabled: false
+        }
       },
       xaxis: {
-        categories: []
+        categories: [],
+        //tickPlacement: 'on'
       }
     },
     series: [{
@@ -116,6 +120,7 @@ new Vue({
     },
     keepUpdating() {
       setInterval(this.getLiveNumber, 2000)
+      //setInterval(this.generateYaxisData, 2000)
       setInterval(this.changeColorMaxValue, 100)
     },
     generateXaxisData() {
@@ -124,19 +129,49 @@ new Vue({
       }
     },
     generateYaxisData() {
-      console.log(Date)
-      axios.get<IDataSets[]>(dataSetUrl + "/" + Date.toString)
+      let date = new Date();
+
+      //let today = String(date.getDate()) + "-" + String(date.getMonth() + 1)
+      let today = String(date.getMonth() + 1) + "-" + String(date.getDate())
+
+      axios.get<IDataSets[]>(dataSetUrl + "/" + today)
         .then((response: AxiosResponse<IDataSets[]>) => {
           
-          let newData: number[] = []
+          let countArray = new Array<number>(24)
+          let newData: IDataSets[] = []          
           
           for (let i = 0; i < response.data.length; i++) {
-            newData[i] = response.data[i].count
+            if(response.data[i] != null)
+            {
+              newData[i] = response.data[i] 
+            }
           }
-          console.log(newData)
+
+          for (let index = this.openingHour; index < this.closingHour + 1; index++) {
+            newData.forEach(element => {
+              var str = String(element.date)
+              var splitted = str.split("")
+              var hour = Number(splitted[11]+splitted[12])
+
+              if(hour == index)
+              countArray[hour+1] = (element.count)
+            });          
+          }
+
+          for (let index = 0; index < countArray.length; index++) {
+            if(typeof(countArray[index]) == 'undefined')
+            {
+              countArray[index] = 0
+            }  
+          }
+          //console.log(countArray)
+
+          var result = countArray.slice(this.openingHour, this.closingHour+1)
+          //console.log(result)
+          
 
           this.series = [{
-            data: newData
+            data: result
           }]
         })
         .catch((error: AxiosError) => {
@@ -152,7 +187,6 @@ new Vue({
     this.getLimitNumber()
     this.generateXaxisData()
     this.generateYaxisData()
-    //this.updateChart()
   },
   mounted() {
     this.keepUpdating()
