@@ -30,25 +30,24 @@
         <input type="password" placeholder="Password" v-model="password">
 
         <button type="submit" class="login-button" v-on:click="login">Login</button>
-
-      
-
     </div>
 
-    <div id="header">
-      <h1>Live View</h1>
-    </div>
-    <div class="store">
-      <p>Storename</p>
-    </div>
-    <div class="row" id="wrapper">
-      <div class="col-sm-6">
-        <p class="live-number">{{liveNumber}}</p>
-        <p class="live-text">Antal kunder</p>
+    <div v-show="publicStatus">
+      <div id="header">
+        <h1>Live View</h1>
       </div>
-      <div class="col-sm-6">
-        <p class="live-number" v-bind:style="{color: valueColor}">{{remaining}}</p>
-        <p class="live-text">Ledige</p>
+      <div class="store">
+        <p>Storename</p>
+      </div>
+      <div class="row" id="wrapper">
+        <div class="col-sm-6">
+          <p class="live-number">{{liveNumber}}</p>
+          <p class="live-text">Antal kunder</p>
+        </div>
+        <div class="col-sm-6">
+          <p class="live-number" v-bind:style="{color: valueColor}">{{remaining}}</p>
+          <p class="live-text">Ledige</p>
+        </div>
       </div>
     </div>
 
