@@ -48,14 +48,18 @@ h1{
     position: absolute;
     top: 0;
     right: 15px;
-}
-
-.form-container {
     max-width: 200px;
     min-width: 100px;
     padding: 10px;
     border: 1px solid black;
 }
+
+/* .form-container {
+    max-width: 200px;
+    min-width: 100px;
+    padding: 10px;
+    border: 1px solid black;
+} */
 
 .form-container input {
     margin-top: 5px;
@@ -65,4 +69,10 @@ h1{
 .login-button {
     margin-left: 60px; 
 }
+
+/* .login-popup {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+} */
 

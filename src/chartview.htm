@@ -57,16 +57,17 @@
         <h3>Ændre username</h3>
         <div class="row">
             <input type="text" id="valueInput4" placeholder="New Username">
-            <button id="saveUsernameButton" v-on:click="saveUsernameHour">Gem</button>
+            <button id="saveUsernameButton" v-on:click="saveUsername">Gem</button>
         </div>
         <h3>Ændre password</h3>
         <div class="row">
             <input type="text" id="valueInput5" placeholder="New Password">
-            <button id="savePasswordButton" v-on:click="savePasswordHour">Gem</button>
+            <button id="savePasswordButton" v-on:click="savePassword">Gem</button>
         </div>
         <h3>Private / Public</h3>
         <div class="row">
-            <input type="checkbox" id="valueInput6">
+            <!-- <input type="checkbox" id="valueInput6" v-on:click="changePublicStatus"> -->
+            <input v-model="publicStatus" type="checkbox" @click="publicStatus = !publicStatus" @change="changePublicStatus">public?</input>
         </div>
     </div>
 

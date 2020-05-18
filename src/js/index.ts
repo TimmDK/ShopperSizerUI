@@ -23,9 +23,23 @@ interface IDataSets {
   date: Date
 }
 
+interface IStoreHours {
+  openingHour: number
+  closingHour: number
+}
+
+interface IUser {
+  id: number
+  username: string
+  password: string
+}
+
 let baseurl = "https://shoppersizerrest.azurewebsites.net/api/LiveNumber/1"
 let limitUrl = "https://shoppersizerrest.azurewebsites.net/api/LimitNumber/1"
 let dataSetUrl = "https://shoppersizerrest.azurewebsites.net/api/datasets/date"
+let userUrl = "https://shoppersizerrest.azurewebsites.net/api/users/1"
+let hoursUrl = "https://shoppersizerrest.azurewebsites.net/api/storehours"
+let publicUrl = "https://shoppersizerrest.azurewebsites.net/api/publicornot"
 
 new Vue({
   el: ".app",
@@ -41,6 +55,10 @@ new Vue({
     valueColor: "green",
     openingHour: 8,
     closingHour: 20,
+    publicStatus: false,
+    username: "",
+    password: "",
+    loggedIn: false,
 
     options: {
       chart: {
@@ -77,7 +95,8 @@ new Vue({
         .then((response: AxiosResponse<ILiveNumber>) => {
           this.liveNumber = response.data.number
           this.getRemainingValue()
-          console.log(response.data)
+          //console.log(response.data)
+          console.log(this.loggedIn)
         })
         .catch((error: AxiosError) => {
           this.errorMessage = error.message
@@ -94,7 +113,7 @@ new Vue({
         })
         .catch((error: AxiosError) => {
           this.errorMessage = error.message
-          console.log(error.message)
+          //console.log(error.message)
         })
     },
     getDataSets() {
@@ -112,6 +131,7 @@ new Vue({
       axios.put<ILimitNumber>(limitUrl, { id: 1, limitTal: Number(ln.value) })
         .then((response: AxiosResponse<ILimitNumber>) => {
           console.log("rettet")
+          ln.value = ""
           this.getLimitNumber()
         })
         .catch((error: AxiosError) => {
@@ -121,10 +141,10 @@ new Vue({
     changeColorMaxValue() {
       if (this.liveNumber >= (this.maxvalue / 100) * 50 && this.liveNumber <= (this.maxvalue / 100) * 75) {
         this.valueColor = "orange"
-        console.log(this.colors)
+        //console.log(this.colors)
       } else if (this.liveNumber >= (this.maxvalue / 100) * 75) {
         this.valueColor = "red"
-        console.log(this.colors)
+        //console.log(this.colors)
       } else {
         this.valueColor = "green"
       }
@@ -133,8 +153,10 @@ new Vue({
       setInterval(this.getLiveNumber, 2000)
       setInterval(this.generateYaxisData, 2000)
       setInterval(this.changeColorMaxValue, 100)
+      //setInterval(this.changePublicStatus, 1000)
     },
     generateXaxisData() {
+      this.options.xaxis.categories.length = 0
       for (let index = this.openingHour; index < this.closingHour + 1; index++) {
         this.options.xaxis.categories.push(index)
       }
@@ -175,7 +197,7 @@ new Vue({
               countArray[index] = 0
             }  
           }
-          console.log(countArray)
+          //console.log(countArray)
 
           var result = countArray.slice(this.openingHour, this.closingHour+1)
           //console.log(result)
@@ -192,12 +214,119 @@ new Vue({
       
 
     },
+    saveUsername(){
+      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("valueInput4")
+      axios.put<ILimitNumber>(userUrl, { id: 1, username: ln.value })
+        .then((response: AxiosResponse<ILimitNumber>) => {
+          console.log("changed username successfully")
+          ln.value = ""
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    savePassword(){
+      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("valueInput5")
+      axios.put<ILimitNumber>(userUrl, { id: 1, password: ln.value })
+        .then((response: AxiosResponse<ILimitNumber>) => {
+          console.log("changed password successfully")
+          ln.value = ""
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    saveOpenHour(){
+      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("valueInput2")
+      axios.put<ILimitNumber>(hoursUrl+"/open/"+ln.value)
+        .then((response: AxiosResponse<ILimitNumber>) => {
+          console.log("changed opening hour successfully")
+          ln.value = ""
+          this.getHours()
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    saveCloseHour(){
+      let ln: HTMLInputElement = <HTMLInputElement>document.getElementById("valueInput3")
+      axios.put<ILimitNumber>(hoursUrl+"/close/"+ln.value)
+        .then((response: AxiosResponse<ILimitNumber>) => {
+          console.log("changed closing hour successfully")
+          ln.value = ""
+          this.getHours()
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    changePublicStatus(){
+      axios.put(publicUrl, this.publicStatus, {headers: {"Content-Type": "application/json"}})
+        .then((response: AxiosResponse<Boolean>) => {
+          console.log("changed public status successfully")
+          this.getPublicStatus()
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+          console.log()
+        })
+        console.log(this.publicStatus)
+    },
+    getPublicStatus(){
+      axios.get<boolean>(publicUrl)
+        .then((response: AxiosResponse<boolean>) => {
+          this.publicStatus = response.data;
+          console.log("public status is: " + response.data)
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    getHours(){
+      axios.get<IStoreHours>(hoursUrl)
+        .then((response: AxiosResponse<IStoreHours>) => {
+          this.openingHour = response.data.openingHour;
+          this.closingHour = response.data.closingHour;
+          console.log("gotten openinghour : " + this.openingHour)
+          console.log("gotten closinghour : " + this.closingHour)
+          this.generateXaxisData()
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    login(){
+      axios.get<IUser>(userUrl)
+        .then((response: AxiosResponse<IUser>) => {
+          if (this.username == response.data.username && this.password == response.data.password){
+            this.loggedIn = true;
+            this.username = "";
+            window.location.replace("/chartview.htm")
+          }
+          this.password = "";
+        })
+        .catch((error: AxiosError) => {
+          console.log(error.message)
+        })
+    },
+    loginPopup() {
+      
+      let display = document.getElementById("myForm")
+      
+      if(display.style.display == "none") {
+        display.style.display = "block"
+      } else {
+        display.style.display = "none"
+      }
+
+    }
   },
   created() {
     this.getLiveNumber()
     this.getLimitNumber()
-    this.generateXaxisData()
     this.generateYaxisData()
+    this.getHours()
+    this.getPublicStatus()
   },
   mounted() {
     this.keepUpdating()
