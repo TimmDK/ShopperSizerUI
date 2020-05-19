@@ -34,6 +34,8 @@ interface IUser {
   password: string
 }
 
+//window.sessionStorage.setItem("loggedIn?", "false");
+
 let baseurl = "https://shoppersizerrest.azurewebsites.net/api/LiveNumber/1"
 let limitUrl = "https://shoppersizerrest.azurewebsites.net/api/LimitNumber/1"
 let dataSetUrl = "https://shoppersizerrest.azurewebsites.net/api/datasets/date"
@@ -58,7 +60,7 @@ new Vue({
     publicStatus: false,
     username: "",
     password: "",
-    loggedIn: false,
+    loggedIn: sessionStorage.getItem("loggedIn?"),
 
     options: {
       chart: {
@@ -96,7 +98,8 @@ new Vue({
           this.liveNumber = response.data.number
           this.getRemainingValue()
           //console.log(response.data)
-          console.log(this.loggedIn)
+          //console.log(sessionStorage.getItem("loggedIn?"))
+          ////console.log(this.loggedIn)
         })
         .catch((error: AxiosError) => {
           this.errorMessage = error.message
@@ -300,6 +303,7 @@ new Vue({
         .then((response: AxiosResponse<IUser>) => {
           if (this.username == response.data.username && this.password == response.data.password){
             this.loggedIn = true;
+            window.sessionStorage.setItem("loggedIn?", "true");
             this.username = "";
             window.location.replace("/chartview.htm")
           }
