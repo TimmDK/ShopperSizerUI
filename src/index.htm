@@ -16,11 +16,12 @@
 
 <body>
   <div class="app">
-    <a href="chartview.htm">lool</a>
+    <a href="chartview.htm" class="btn btn-info" v-show="loggedIn">admin</a>
+    <a href="stats.html" class="btn btn-info">statestik</a>
+
     
 
-
-    <button class="login-popup" v-on:click="loginPopup">Login</button>
+      <button class="login-popup" v-on:click="loginPopup">Login</button>
 
     <div class="form-popup" id="myForm">
         <h1>Login</h1>

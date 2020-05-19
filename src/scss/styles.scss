@@ -45,9 +45,10 @@ h1{
 
 .form-popup {
     display: block;
-    position: absolute;
-    top: 0;
-    right: 15px;
+    // position: absolute;
+    // top: 0;
+    // right: 15px;
+    float: right;
     max-width: 200px;
     min-width: 100px;
     padding: 10px;
@@ -75,4 +76,6 @@ h1{
     right: 20px;
     top: 20px;
 } */
-
+.login-popup{
+    float: right;
+}

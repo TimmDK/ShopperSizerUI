@@ -331,6 +331,7 @@ new Vue({
     this.generateYaxisData()
     this.getHours()
     this.getPublicStatus()
+    this.loginPopup()//skjuler login form
   },
   mounted() {
     this.keepUpdating()
