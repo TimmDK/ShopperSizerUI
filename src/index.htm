@@ -18,28 +18,29 @@
   <div class="app">
     <a href="chartview.htm" class="btn btn-info" v-show="loggedIn">admin</a>
     <a href="stats.html" class="btn btn-info">statestik</a>
-
-    
-
-      <button class="login-popup" v-on:click="loginPopup">Login</button>
+    <button class="login-popup" v-on:click="loginPopup">Login</button>
 
     <div class="form-popup" id="myForm">
-        <h1>Login</h1>
-        
-        <input type="text" placeholder="Username" v-model="username">
+      <h1>Login</h1>
+      
+      <input type="text" placeholder="Username" v-model="username">
 
-        <input type="password" placeholder="Password" v-model="password">
+      <input type="password" placeholder="Password" v-model="password">
 
-        <button type="submit" class="login-button" v-on:click="login">Login</button>
+      <button type="submit" class="login-button" v-on:click="login">Login</button>
+  </div>
+  
+    <div id="header">
+      <h1>Live View</h1>
+    </div>
+    <div class="store">
+      <p>Storename</p>
     </div>
 
+
+
     <div v-show="publicStatus">
-      <div id="header">
-        <h1>Live View</h1>
-      </div>
-      <div class="store">
-        <p>Storename</p>
-      </div>
+
       <div class="row" id="wrapper">
         <div class="col-sm-6">
           <p class="live-number">{{liveNumber}}</p>
