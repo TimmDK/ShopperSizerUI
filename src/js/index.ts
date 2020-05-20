@@ -63,29 +63,43 @@ new Vue({
     loggedIn: sessionStorage.getItem("loggedIn?"),
 
     options: {
-      chart: {
+      chart: [{
         id: 'vuechart',
         zoom: {
           enabled: false
         }
+      }, {
+        height: 350,
+        type: 'line',
+      }],
+      stroke: {
+        width: [0, 3]
       },
+      /* fill: [
+        {colors: ['#F44336', '#E91E63', '#9C27B0']},
+        {colors: ['#F44336', '#E91E63', '#9C27B0']}
+      ], */
+
       plotOptions: {
         bar: {
             //distributed: true
         }
       },
-      // fill: {
-      //   colors: ['#41B883', '#41B883'],
-      // },
       
       xaxis: {
         categories: [],
         //tickPlacement: 'on'
       }
     },
+
     series: [{
       name: 'Antal kunder',
-      data: [1]
+      type: 'column',
+      data: [20,30,40,50]
+    },{
+      name: 'Grænseværdi',
+      type: 'line',
+      data: [0]
     }],
 
 
@@ -174,7 +188,8 @@ new Vue({
         .then((response: AxiosResponse<IDataSets[]>) => {
           
           let countArray = new Array<number>(24)
-          let newData: IDataSets[] = []          
+          let newData: IDataSets[] = []    
+          let result2: number[] = []      
           
           for (let i = 0; i < response.data.length; i++) {
             if(response.data[i] != null)
@@ -189,9 +204,12 @@ new Vue({
               var splitted = str.split("")
               var hour = Number(splitted[11]+splitted[12])
 
-              if(hour == index)
-              countArray[hour] = (element.count)
-            });          
+              if(hour == index){
+                countArray[hour] = (element.count)
+                
+              }
+            }); 
+            result2.push(this.maxvalue)         
           }
 
           for (let index = 0; index < countArray.length; index++) {
@@ -208,6 +226,8 @@ new Vue({
 
           this.series = [{
             data: result
+          },{
+            data: result2
           }]
         })
         .catch((error: AxiosError) => {
@@ -317,7 +337,7 @@ new Vue({
       
       let display = document.getElementById("myForm")
       
-      if(display.style.display == "none") {
+      if(display.style.display == "none" || display.style.display == "") {
         display.style.display = "block"
       } else {
         display.style.display = "none"
@@ -331,7 +351,6 @@ new Vue({
     this.generateYaxisData()
     this.getHours()
     this.getPublicStatus()
-    this.loginPopup()//skjuler login form
   },
   mounted() {
     this.keepUpdating()
