@@ -31,7 +31,7 @@
                         <p class="live-text chart-live">Antal kunder</p>
                     </div>
                     <div class="col-sm-6">
-                        <p id="remaining" class="live-number chart-live">{{remaining}}</p>
+                        <p id="remaining" class="live-number chart-live" v-bind:style="{color: valueColor}">{{remaining}}</p>
                         <p class="live-text chart-live">Ledige</p>
                     </div>
                 </div>
