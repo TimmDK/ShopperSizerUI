@@ -34,6 +34,15 @@ interface IUser {
   password: string
 }
 
+interface IWeather{
+  _id:number
+  parameterId: string
+  stationId: number
+  timeCreated: number
+  timeObserved: number
+  value: number
+}
+
 //window.sessionStorage.setItem("loggedIn?", "false");
 
 let baseurl = "https://shoppersizerrest.azurewebsites.net/api/LiveNumber/1"
@@ -42,6 +51,7 @@ let dataSetUrl = "https://shoppersizerrest.azurewebsites.net/api/datasets/date"
 let userUrl = "https://shoppersizerrest.azurewebsites.net/api/users/1"
 let hoursUrl = "https://shoppersizerrest.azurewebsites.net/api/storehours"
 let publicUrl = "https://shoppersizerrest.azurewebsites.net/api/publicornot"
+let weatherUrl = "https://dmigw.govcloud.dk/metObs/v1/observation?latest=&parameterId=temp_dry&stationId=06156&api-key=155e78ec-dd81-4ab0-a4fc-7eef04cbe935"
 
 new Vue({
   el: ".app",
@@ -61,6 +71,7 @@ new Vue({
     username: "",
     password: "",
     loggedIn: sessionStorage.getItem("loggedIn?"),
+    temp: 0,
 
     options: {
       chart: [{
@@ -171,6 +182,7 @@ new Vue({
       setInterval(this.generateYaxisData, 2000)
       setInterval(this.changeColorMaxValue, 100)
       //setInterval(this.changePublicStatus, 1000)
+      setInterval(this.getWeather,600000)
     },
     generateXaxisData() {
       this.options.xaxis.categories.length = 0
@@ -343,7 +355,16 @@ new Vue({
         display.style.display = "none"
       }
 
-    }
+    },
+    getWeather(){
+      
+      axios.get<IWeather[]>(weatherUrl)
+      .then((response: AxiosResponse<IWeather[]>) => {
+        this.temp=response.data[0].value
+        console.log(this.temp)
+        
+      })
+    },
   },
   created() {
     this.getLiveNumber()
@@ -351,6 +372,7 @@ new Vue({
     this.generateYaxisData()
     this.getHours()
     this.getPublicStatus()
+    this.getWeather()
   },
   mounted() {
     this.keepUpdating()
