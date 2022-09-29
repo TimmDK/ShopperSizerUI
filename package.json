@@ -27,7 +27,7 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
-    "@amcharts/amcharts4": "^4.9.19",
+    "@amcharts/amcharts4": "^4.10.28",
     "@amcharts/amcharts4-fonts": "^4.0.1",
     "apexcharts": "^3.19.0",
     "bootstrap": "^4.4.1",
