@@ -12,7 +12,7 @@
   "author": "Ebbe Vang, evang.dk",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.24.6",
+    "browser-sync": "^2.27.10",
     "browser-sync-webpack-plugin": "^2.2.2",
     "css-loader": "^1.0.0",
     "extract-loader": "^2.0.1",
